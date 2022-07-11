@@ -18,7 +18,10 @@ class Renderer(object):
     def __init__(self, width, height):
         self.width = width
         self.height = height
-
+        self.Xinicial = 0
+        self.Yinicial = 0
+        self.Xfinal = width
+        self.Yfinal = height
         self.clearColor = color(0,0,0)
         self.currColor = color(1,1,1)
 
@@ -35,13 +38,18 @@ class Renderer(object):
         self.currColor = color(r, g, b)
 
     def glPoint(self, x, y, clr = None):
-        if (0<= x < self.width) and (0 <= y < self.height):
+        if (self.Xinicial <= x < self.Xfinal) and (self.Yinicial <= y < self.Yfinal):
             self.pixels[x][y] = clr or self.currColor
 
     def glClear(self):
-        self.pixels = [[ self.clearColor for y in range (self.height)]
-                       for x in range (self.width)]
+        self.pixels = [[ self.clearColor for y in range (self.Yinicial, self.Yfinal) ]
+                       for x in range (self.Xinicial, self.Xfinal)]
 
+    def glViewPort(self, x, y, width, height):
+        self.Xinicial = x
+        self.Yinicial = y
+        self.Xfinal = x + width
+        self.Yfinal = y + height
 
     def glFinish(self, filename):
         with open(filename, "wb") as file:
