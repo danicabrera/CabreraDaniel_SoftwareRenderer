@@ -1,3 +1,8 @@
+#Universidad del Valle de Guatemala
+#Daniel Cabrera 20289
+#Gráficas por Computadora
+#Base de Carlos Alonso
+
 import struct
 
 def char(c):
@@ -42,8 +47,8 @@ class Renderer(object):
             self.pixels[x][y] = clr or self.currColor
 
     def glClear(self):
-        self.pixels = [[ self.clearColor for y in range (self.Yinicial, self.Yfinal) ]
-                       for x in range (self.Xinicial, self.Xfinal)]
+        self.pixels = [[ self.clearColor for y in range (self.height) ]
+                       for x in range (self.width)]
 
     def glViewPort(self, x, y, width, height):
         self.Xinicial = x
