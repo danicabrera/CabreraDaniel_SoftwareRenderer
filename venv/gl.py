@@ -83,14 +83,14 @@ class Renderer(object):
 
 
     def glLine(self, v0, v1, clr=None):
-        # Bresenham line algorithm
-        # y = m * x + b
+
+
         x0 = int(v0.x)
         x1 = int(v1.x)
         y0 = int(v0.y)
         y1 = int(v1.y)
 
-        # Si el punto0 es igual al punto 1, dibujar solamente un punto
+
         if x0 == x1 and y0 == y1:
             self.glPoint(x0, y0, clr)
             return
@@ -100,16 +100,10 @@ class Renderer(object):
 
         steep = dy > dx
 
-        # Si la linea tiene pendiente mayor a 1 o menor a -1
-        # intercambio las x por las y, y se dibuja la linea
-        # de manera vertical
         if steep:
             x0, y0 = y0, x0
             x1, y1 = y1, x1
 
-        # Si el punto inicial X es mayor que el punto final X,
-        # intercambio los puntos para siempre dibujar de
-        # izquierda a derecha
         if x0 > x1:
             x0, x1 = x1, x0
             y0, y1 = y1, y0
@@ -124,10 +118,8 @@ class Renderer(object):
 
         for x in range(x0, x1 + 1):
             if steep:
-                # Dibujar de manera vertical
                 self.glPoint(y, x, clr)
             else:
-                # Dibujar de manera horizontal
                 self.glPoint(x, y, clr)
 
             offset += m
@@ -139,6 +131,11 @@ class Renderer(object):
                     y -= 1
 
                 limit += 1
+
+    def gldrawPoli(self, poligono, clr=None):
+        for i in range(len(poligono)):
+            self.glLine(poligono[i],
+                        poligono[(i + 1) % len(poligono)], clr)
 
     def glFinish(self, filename):
         with open(filename, "wb") as file:
