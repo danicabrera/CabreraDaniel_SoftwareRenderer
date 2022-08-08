@@ -10,8 +10,11 @@ import random
 width = 1920
 height = 1080
 rend = Renderer(width, height)
+
 rend.glLoadModel("tree.obj",
                  translate= V3(width/2, height/6, 0),
+                 rotate= V3(0, 180, 0),
                  scale = V3(30, 30, 30))
+
 
 rend.glFinish("output.bmp")
