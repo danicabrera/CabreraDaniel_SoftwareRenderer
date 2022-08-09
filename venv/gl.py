@@ -36,16 +36,20 @@ def baryCoords(A, B, C, P):
     areaPAC = (C.y - A.y) * (P.x - C.x) + (A.x - C.x) * (P.y - C.y)
     areaABC = (B.y - C.y) * (A.x - C.x) + (C.x - B.x) * (A.y - C.y)
 
-    # PBC / ABC
-    u = areaPBC / areaABC
+    try:
+        # PBC / ABC
+        u = areaPBC / areaABC
 
-    # PAC / ABC
-    v = areaPAC / areaABC
+        # PAC / ABC
+        v = areaPAC / areaABC
 
-    # 1 - u - v
-    w = 1 - u - v
+        # 1 - u - v
+        w = 1 - u - v
+    except:
+        return  -1,-1,-1
+    else:
 
-    return u, v, w
+        return u, v, w
 
 class Renderer(object):
     def __init__(self, width, height):
@@ -54,6 +58,9 @@ class Renderer(object):
         self.glViewport(0, 0, self.width, self.height)
         self.clearColor = color(0,0,0)
         self.currColor = color(1,1,1)
+        self.active_shader = None
+
+        self.dirLight = V3(1, 0, 0)
 
         self.glClear()
 
@@ -173,7 +180,12 @@ class Renderer(object):
             v2 = self.glTransform(v2, modelMatrix)
 
 
-            self.glTriangle_std(v0, v1, v2, color(random.random(), random.random(), random.random()))
+            self.glTriangle_bc(v0, v1, v2 )
+
+            if vertCount == 4:
+                v3 = model.vertices[face[3][0] - 1]
+                v3 = self.glTransform(v3, modelMatrix)
+                self.glTriangle_bc(v0, v2, v3)
 
     def glTriangle_std(self, A, B, C, clr=None):
 
@@ -290,6 +302,8 @@ class Renderer(object):
         minY = round(min(A.y, B.y, C.y))
         maxX = round(max(A.x, B.x, C.x))
         maxY = round(max(A.y, B.y, C.y))
+        triangleNormal = np.cross(np.subtract(B, A), np.subtract(C, A))
+        triangleNormal = triangleNormal / np.linalg.norm(triangleNormal)
 
         for x in range(minX, maxX + 1):
             for y in range(minY, maxY + 1):
@@ -301,7 +315,11 @@ class Renderer(object):
 
                     if z < self.zbuffer[x][y]:
                         self.zbuffer[x][y] = z
-                        self.glPoint(x, y, clr)
+                        if self.active_shader:
+                            r, g, b = self.active_shader(self, baryCoords=(u, v, w), vColor=clr or self.currColor, triangleNormal=triangleNormal)
+                            self.glPoint(x, y, color(r, g, b))
+                        else:
+                            self.glPoint(x, y, clr)
 
     def glFinish(self, filename):
         with open(filename, "wb") as file:
