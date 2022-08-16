@@ -12,16 +12,49 @@ from texture import Texture
 width = 960
 height = 540
 rend = Renderer(width, height)
-rend.active_shader = unlit
+rend.active_shader = gourad
 rend.active_texture = Texture("model.bmp")
 rend.glLoadModel("model.obj",
-                 translate= V3(-3, 0, -10),
+                 translate= V3(0, 0, -10),
                  scale = V3(4, 4, 4))
 
-rend.active_shader = toon
+rend.glFinish("Medium.bmp")
+
+width = 960
+height = 540
+rend = Renderer(width, height)
+rend.active_shader = gourad
+rend.active_texture = Texture("model.bmp")
 rend.glLoadModel("model.obj",
-                 translate= V3(3, 0, -20),
-                 scale = V3(4, 4, 4))
+                 translate= V3(0, 0, -10),
+                 scale = V3(4, 4, 4),
+                 rotate= V3(330,0,0))
+
+rend.glFinish("Low.bmp")
+
+width = 960
+height = 540
+rend = Renderer(width, height)
+rend.active_shader = gourad
+rend.active_texture = Texture("model.bmp")
+rend.glLoadModel("model.obj",
+                 translate= V3(0, 0, -10),
+                 scale = V3(4, 4, 4),
+                 rotate= V3(60,0,0))
+
+rend.glFinish("HIGH.bmp")
+
+width = 960
+height = 540
+rend = Renderer(width, height)
+rend.active_shader = gourad
+rend.active_texture = Texture("model.bmp")
+rend.glLoadModel("model.obj",
+                 translate= V3(0, 0, -10),
+                 scale = V3(4, 4, 4),
+                 rotate= V3(0,0,45))
+
+rend.glFinish("Dutch.bmp")
 
 
-rend.glFinish("output.bmp")
+
