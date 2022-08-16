@@ -18,7 +18,7 @@ rend.glLoadModel("model.obj",
                  translate= V3(0, 0, -10),
                  scale = V3(4, 4, 4))
 
-rend.glFinish("Medium.bmp")
+rend.glFinish("venv/Shots/Medium.bmp")
 
 width = 960
 height = 540
@@ -30,7 +30,7 @@ rend.glLoadModel("model.obj",
                  scale = V3(4, 4, 4),
                  rotate= V3(330,0,0))
 
-rend.glFinish("Low.bmp")
+rend.glFinish("venv/Shots/Low.bmp")
 
 width = 960
 height = 540
@@ -42,7 +42,7 @@ rend.glLoadModel("model.obj",
                  scale = V3(4, 4, 4),
                  rotate= V3(60,0,0))
 
-rend.glFinish("HIGH.bmp")
+rend.glFinish("venv/Shots/HIGH.bmp")
 
 width = 960
 height = 540
@@ -54,7 +54,7 @@ rend.glLoadModel("model.obj",
                  scale = V3(4, 4, 4),
                  rotate= V3(0,0,45))
 
-rend.glFinish("Dutch.bmp")
+rend.glFinish("venv/Shots/Dutch.bmp")
 
 
 

@@ -1,3 +1,8 @@
+#Universidad del Valle de Guatemala
+#Daniel Cabrera 20289
+#Gráficas por Computadora
+#Base de Carlos Alonso
+
 import struct
 
 class Texture(object):
