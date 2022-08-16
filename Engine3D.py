@@ -5,18 +5,23 @@
 
 from gl import Renderer, color, V2, V3
 from OBJ import Obj
-from shader import flat
-import random
+from shader import flat, gourad, unlit, toon, glow, textureBlend
+from texture import Texture
 
-width = 1920
-height = 1080
+
+width = 960
+height = 540
 rend = Renderer(width, height)
-rend.active_shader = flat
+rend.active_shader = unlit
+rend.active_texture = Texture("model.bmp")
+rend.glLoadModel("model.obj",
+                 translate= V3(-3, 0, -10),
+                 scale = V3(4, 4, 4))
 
-rend.glLoadModel("tree.obj",
-                 translate= V3(width/2, height/6, 0),
-                 rotate= V3(0, 0, 0),
-                 scale = V3(30, 30, 30))
+rend.active_shader = toon
+rend.glLoadModel("model.obj",
+                 translate= V3(3, 0, -20),
+                 scale = V3(4, 4, 4))
 
 
 rend.glFinish("output.bmp")
