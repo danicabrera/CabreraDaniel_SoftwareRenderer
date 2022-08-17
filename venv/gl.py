@@ -60,6 +60,7 @@ class Renderer(object):
         self.currColor = color(1,1,1)
         self.active_shader = None
         self.active_texture =None
+        self.active_texture2 = None
         self.glViewMatrix()
         self.dirLight = V3(0, 0, -1)
 

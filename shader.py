@@ -139,6 +139,57 @@ def toon(render, **kwargs):
     else:
         return 0,0,0
 
+def toon2(render, **kwargs):
+
+    u, v, w = kwargs["baryCoords"]
+    b, g, r = kwargs["vColor"]
+    tA, tB, tC = kwargs["texCoords"]
+    nA, nB, nC = kwargs["normals"]
+    b /= 255
+    g /= 255
+    r /= 255
+    if render.active_texture:
+        # P = Au + Bv + Cw
+        tU = tA[0] * u + tB[0] * v + tC[0] * w
+        tV = tA[1] * u + tB[1] * v + tC[1] * w
+        texColor = render.active_texture.getColor(tU, tV)
+        b *= texColor[2]
+        g *= texColor[1]
+        r *= texColor[0]
+    triangleNormal = np.array([nA[0] * u + nB[0] * v + nC[0] * w,
+                               nA[1] * u + nB[1] * v + nC[1] * w,
+                               nA[2] * u + nB[2] * v + nC[2] * w])
+    dirLight = np.array(render.dirLight)
+    intensity = np.dot(triangleNormal, -dirLight)
+
+    if intensity < 0.2:
+        intensity = 0.1
+    elif intensity < 0.3:
+        intensity = 0.2
+    elif intensity < 0.4:
+        intensity = 0.3
+    elif intensity < 0.5:
+        intensity = 0.4
+    elif intensity < 0.6:
+        intensity = 0.5
+    elif intensity < 0.7:
+        intensity = 0.6
+    elif intensity < 0.8:
+        intensity = 0.7
+    elif intensity < 0.9:
+        intensity = 0.8
+    elif intensity <= 1:
+        intensity = 0.9
+
+    b *= intensity
+    g *= intensity
+    r *= intensity
+
+    if intensity > 0:
+        return r, g, b
+    else:
+        return 0,0,0
+
 def glow(render, **kwargs):
 
     u, v, w = kwargs["baryCoords"]
@@ -195,6 +246,151 @@ def glow(render, **kwargs):
     else:
         return 0,0,0
 
+def Ice(render, **kwargs):
+
+    u, v, w = kwargs["baryCoords"]
+    b, g, r = kwargs["vColor"]
+    tA, tB, tC = kwargs["texCoords"]
+    nA, nB, nC = kwargs["normals"]
+
+    b /= 255
+    g /= 255
+    r /= 255
+
+    if render.active_texture:
+        # P = Au + Bv + Cw
+        tU = tA[0] * u + tB[0] * v + tC[0] * w
+        tV = tA[1] * u + tB[1] * v + tC[1] * w
+
+        texColor = render.active_texture.getColor(tU, tV)
+
+        b *= texColor[2]
+        g *= texColor[1]
+        r *= texColor[0]
+
+    triangleNormal = np.array([nA[0] * u + nB[0] * v + nC[0] * w,
+                               nA[1] * u + nB[1] * v + nC[1] * w,
+                               nA[2] * u + nB[2] * v + nC[2] * w])
+
+    dirLight = np.array(render.dirLight)
+    intensity = np.dot(triangleNormal, -dirLight)
+
+    if intensity < 0.2:
+        intensity = 0.1
+    elif intensity < 0.3:
+        intensity = 0.2
+    elif intensity < 0.4:
+        intensity = 0.3
+    elif intensity < 0.5:
+        intensity = 0.4
+    elif intensity < 0.6:
+        intensity = 0.5
+    elif intensity < 0.7:
+        intensity = 0.6
+    elif intensity < 0.8:
+        intensity = 0.7
+    elif intensity < 0.9:
+        intensity = 0.8
+    elif intensity <= 1:
+        intensity = 0.9
+
+    b *= intensity
+    g *= intensity
+    r *= intensity
+
+    camForward = (render.camMatrix.item(0,2),
+                  render.camMatrix.item(1,2),
+                  render.camMatrix.item(2,2))
+
+    glowAmount = 1 - np.dot(triangleNormal, camForward)
+
+    if glowAmount <= 0: glowAmount = 0
+
+    color1 = (0.2,0.8,1)
+
+    b += color1[2] * 0.5
+    g += color1[1] * 0.5
+    r += color1[0] * 0.5
+
+    if b > 1: b = 1
+    if g > 1: g = 1
+    if r > 1: r = 1
+
+    if intensity > 0:
+        return r, g, b
+    else:
+        return 0,0,0
+
+def Intense(render, **kwargs):
+
+    u, v, w = kwargs["baryCoords"]
+    b, g, r = kwargs["vColor"]
+    tA, tB, tC = kwargs["texCoords"]
+    nA, nB, nC = kwargs["normals"]
+
+    b /= 255
+    g /= 255
+    r /= 255
+
+    if render.active_texture:
+        # P = Au + Bv + Cw
+        tU = tA[0] * u + tB[0] * v + tC[0] * w
+        tV = tA[1] * u + tB[1] * v + tC[1] * w
+
+        texColor = render.active_texture.getColor(tU, tV)
+
+        b *= texColor[2]
+        g *= texColor[1]
+        r *= texColor[0]
+
+    triangleNormal = np.array([nA[0] * u + nB[0] * v + nC[0] * w,
+                               nA[1] * u + nB[1] * v + nC[1] * w,
+                               nA[2] * u + nB[2] * v + nC[2] * w])
+
+    dirLight = np.array(render.dirLight)
+    intensity = np.dot(triangleNormal, -dirLight)
+
+    if intensity < 0.2:
+        intensity = 0.1
+    elif intensity < 0.3:
+        intensity = 0.2
+    elif intensity < 0.4:
+        intensity = 0.3
+    elif intensity < 0.5:
+        intensity = 0.4
+    elif intensity < 0.6:
+        intensity = 0.5
+    elif intensity < 0.7:
+        intensity = 0.6
+    elif intensity < 0.8:
+        intensity = 0.7
+    elif intensity < 0.9:
+        intensity = 0.8
+    elif intensity <= 1:
+        intensity = 0.9
+
+    b *= intensity
+    g *= intensity
+    r *= intensity
+
+    camForward = (render.camMatrix.item(0,2),
+                  render.camMatrix.item(1,2),
+                  render.camMatrix.item(2,2))
+
+    glowAmount = 1 - np.dot(triangleNormal, camForward)
+
+    if glowAmount <= 0: glowAmount =0
+
+
+
+    if b > 1: b = 1
+    if g > 1: g = 1
+    if r > 1: r = 1
+
+    if intensity > 0:
+        return r, g, b
+    else:
+        return 0,0,0
 
 def textureBlend(render, **kwargs):
     # Normal calculada por vertice

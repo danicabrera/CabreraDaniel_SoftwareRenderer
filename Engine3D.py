@@ -5,56 +5,23 @@
 
 from gl import Renderer, color, V2, V3
 from OBJ import Obj
-from shader import flat, gourad, unlit, toon, glow, textureBlend
+from shader import flat, gourad, unlit, toon, glow, textureBlend, toon2, Ice, Intense
 from texture import Texture
 
 
 width = 960
 height = 540
 rend = Renderer(width, height)
-rend.active_shader = gourad
+rend.active_shader = glow
 rend.active_texture = Texture("model.bmp")
 rend.glLoadModel("model.obj",
-                 translate= V3(0, 0, -10),
+                 translate= V3(3, 0, -10),
                  scale = V3(4, 4, 4))
 
-rend.glFinish("venv/Shots/Medium.bmp")
 
-width = 960
-height = 540
-rend = Renderer(width, height)
-rend.active_shader = gourad
-rend.active_texture = Texture("model.bmp")
+rend.active_shader = Intense
 rend.glLoadModel("model.obj",
-                 translate= V3(0, 0, -10),
-                 scale = V3(4, 4, 4),
-                 rotate= V3(330,0,0))
+                 translate= V3(-3, 0, -10),
+                 scale = V3(4, 4, 4))
 
-rend.glFinish("venv/Shots/Low.bmp")
-
-width = 960
-height = 540
-rend = Renderer(width, height)
-rend.active_shader = gourad
-rend.active_texture = Texture("model.bmp")
-rend.glLoadModel("model.obj",
-                 translate= V3(0, 0, -10),
-                 scale = V3(4, 4, 4),
-                 rotate= V3(60,0,0))
-
-rend.glFinish("venv/Shots/HIGH.bmp")
-
-width = 960
-height = 540
-rend = Renderer(width, height)
-rend.active_shader = gourad
-rend.active_texture = Texture("model.bmp")
-rend.glLoadModel("model.obj",
-                 translate= V3(0, 0, -10),
-                 scale = V3(4, 4, 4),
-                 rotate= V3(0,0,45))
-
-rend.glFinish("venv/Shots/Dutch.bmp")
-
-
-
+rend.glFinish("output.bmp")
