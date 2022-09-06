@@ -61,6 +61,7 @@ class Renderer(object):
         self.active_shader = None
         self.active_texture =None
         self.active_texture2 = None
+        self.background = None
         self.glViewMatrix()
         self.dirLight = V3(0, 0, -1)
 
@@ -155,6 +156,19 @@ class Renderer(object):
         self.zbuffer = [[float('inf') for y in range(self.height)]
                         for x in range(self.width)]
 
+    def glClearBackground(self):
+        if self.background:
+            for x in range(self.vpX, self.vpX + self.vpWidth + 1):
+                for y in range(self.vpY, self.vpY + self.vpHeight + 1):
+
+                    tU = (x - self.vpX) / self.vpWidth
+                    tV = (y - self.vpY) / self.vpHeight
+
+                    texColor = self.background.getColor(tU, tV)
+
+                    if texColor:
+                        self.glPoint(x, y, color(texColor[0], texColor[1], texColor[2]))
+
     def glClearViewport(self, clr=None):
         for x in range(self.vpX, self.vpX + self.vpWidth):
             for y in range(self.vpY, self.vpY + self.vpHeight):
@@ -230,6 +244,7 @@ class Renderer(object):
         rotationMatrix = self.glCreateRotationMatrix(rotate[0], rotate[1], rotate[2])
 
         for face in model.faces:
+
             vertCount = len(face)
 
             v0 = model.vertices[ face[0][0] - 1]
@@ -247,6 +262,7 @@ class Renderer(object):
             vt0 = model.texcoords[face[0][1] - 1]
             vt1 = model.texcoords[face[1][1] - 1]
             vt2 = model.texcoords[face[2][1] - 1]
+
 
             vn0 = model.normals[face[0][2] - 1]
             vn1 = model.normals[face[1][2] - 1]

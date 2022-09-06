@@ -19,12 +19,14 @@ class Obj(object):
                 prefix, value = line.split(' ', 1)
             except:
                 continue
-
-            if prefix == 'v': # Se leen vertices
-                self.vertices.append( list(map(float,value.split(' '))))
-            elif prefix == 'vt': # Se leen coordenadas
-                self.texcoords.append( list(map(float, value.split(' '))))
-            elif prefix == 'vn': # Se leen normales
-                self.normals.append( list(map(float, value.split(' '))))
-            elif prefix == 'f': # Se leen caras
-                self.faces.append([  list(map(int, vert.split('/'))) for vert in value.split(' ')] )
+            try:
+                if prefix == 'v': # Se leen vertices
+                    self.vertices.append( list(map(float,value.split(' '))))
+                elif prefix == 'vt': # Se leen coordenadas
+                    self.texcoords.append( list(map(float, value.split(' '))))
+                elif prefix == 'vn': # Se leen normales
+                    self.normals.append( list(map(float, value.split(' '))))
+                elif prefix == 'f': # Se leen caras
+                    self.faces.append([  list(map(int, vert.split('/'))) for vert in value.split(' ')] )
+            except:
+                continue
