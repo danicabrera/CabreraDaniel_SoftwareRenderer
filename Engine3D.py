@@ -37,7 +37,7 @@ rend.glLoadModel("models/cabana.obj",
                  scale = V3(0.38, 0.38, 0.38))
 
 rend.active_shader = Black
-rend.active_texture = Texture("textures/piel1.bmp")
+rend.active_texture = Texture("textures/piel6.bmp")
 rend.glLoadModel("models/girl.obj",
                  translate= V3(3, -3, -10),
                  rotate= V3(0,65,0),
